@@ -28,12 +28,7 @@ localtunnel.log
 pinggy.log
 repomix-output.xml
 
-# Large ML Weights / Large Datasets
-*.pt
-*.keras
-*.h5
-*.npy
-*.joblib
+# Large ML Weights / Large Datasets (tracked via Git LFS in .gitattributes)
 
 # OS specific
 .DS_Store
