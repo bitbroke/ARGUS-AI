@@ -35,7 +35,10 @@ RUN pip install --no-cache-dir \
 # Step 3b: Install lightweight CPU-only TensorFlow (avoids massive GPU binary extraction OOM)
 RUN pip install --no-cache-dir tensorflow-cpu
 
-# Step 3c: Install headless OpenCV and Ultralytics YOLO
+# Step 3c: Install CPU-only PyTorch and Torchvision (avoids massive 2.7GB GPU package download)
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+# Step 3d: Install headless OpenCV and Ultralytics YOLO (skips torch download since it's already installed)
 RUN pip install --no-cache-dir opencv-python-headless==4.9.0.80
 RUN pip install --no-cache-dir ultralytics==8.2.0
 
