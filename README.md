@@ -1,6 +1,17 @@
+---
+title: Flipkart Gridlock
+emoji: 🚦
+colorFrom: red
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Argus AI
 
 > Spatial Intelligence & Real-time Urban Anomaly Resolution Platform
+
 
 Argus AI is a cutting-edge platform designed to monitor, predict, and resolve urban traffic anomalies. By combining real-time computer vision with a custom Graph Neural Network (ST-GCN + Mamba), Argus AI provides city operators with instantaneous insights and predictive cascading delay analysis.
 
