@@ -17,12 +17,29 @@ ENV PATH="/home/user/.local/bin:$PATH"
 
 WORKDIR /app
 
-# 3. Install requirements
-COPY --chown=user backend/requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# 3. Memory-Safe Sequential Installation Hack to avoid out-of-memory errors on Hugging Face Spaces basic CPU
+# Step 3a: Install core web & network libraries
+RUN pip install --no-cache-dir \
+    fastapi==0.111.0 \
+    uvicorn==0.29.0 \
+    pydantic==2.7.0 \
+    python-multipart==0.0.9 \
+    slowapi==0.1.9 \
+    limits==3.12.0 \
+    osmnx==1.9.3 \
+    networkx==3.3 \
+    numpy \
+    joblib \
+    scikit-learn
+
+# Step 3b: Install lightweight CPU-only TensorFlow (avoids massive GPU binary extraction OOM)
+RUN pip install --no-cache-dir tensorflow-cpu
+
+# Step 3c: Install headless OpenCV and Ultralytics YOLO
+RUN pip install --no-cache-dir opencv-python-headless==4.9.0.80
+RUN pip install --no-cache-dir ultralytics==8.2.0
 
 # 4. Pre-download YOLOv8n model inside the container to avoid runtime downloads
-RUN pip install --no-cache-dir ultralytics==8.2.0
 RUN python -c "from ultralytics import YOLO; YOLO('yolov8n.pt')"
 
 # 5. Copy the backend application files into the working directory
