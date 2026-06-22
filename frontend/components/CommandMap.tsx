@@ -174,7 +174,7 @@ export default function CommandMap() {
 
   return (
     <DeckGL
-      initialViewState={viewState}
+      viewState={viewState}
       controller={true}
       layers={[edgesLayer, nodesLayer]}
       onViewStateChange={({ viewState }: any) => setViewState(viewState)}
