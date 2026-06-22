@@ -47,7 +47,8 @@ RUN pip install --no-cache-dir ultralytics==8.2.0
 # 4. Pre-download YOLOv8n model inside the container to avoid runtime downloads
 RUN python -c "from ultralytics import YOLO; YOLO('yolov8n.pt')"
 
-# 5. Copy the backend application files into the working directory
+# 5. Copy the backend application files and required training script into the working directory
+COPY --chown=user train_stgcn.py /app/
 COPY --chown=user backend/ /app/
 
 # Expose port 7860 (Hugging Face default)
