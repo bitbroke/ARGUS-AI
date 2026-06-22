@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+*.ipynb
+cache/
+
+
+# Node/Next.js
+node_modules/
+.next/
+out/
+build/
+.vercel/
+.env*.local
+next-env.d.ts
+*.tsbuildinfo
+
+# Local tunnel / ngrok files
+ngrok.exe
+ngrok.zip
+ngrok.log
+ngrok.yml
+localtunnel.log
+pinggy.log
+repomix-output.xml
+
+# Large ML Weights / Large Datasets
+*.pt
+*.keras
+*.h5
+*.npy
+*.joblib
+
+# OS specific
+.DS_Store
+Thumbs.db

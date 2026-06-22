@@ -1,0 +1,14 @@
+[
+  {
+    "node_id": "6518562625",
+    "lat": 12.9254475,
+    "lon": 77.6184967,
+    "street_name": "18th Main Road",
+    "pixel_zone": {
+      "x_min": 100,
+      "x_max": 400,
+      "y_min": 100,
+      "y_max": 400
+    }
+  }
+]

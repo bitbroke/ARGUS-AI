@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  ucc-backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/data:/app/data
+    restart: unless-stopped
