@@ -1,28 +1,22 @@
----
-title: Flipkart Gridlock
-emoji: 🚦
-colorFrom: red
-colorTo: indigo
-sdk: docker
-app_port: 7860
-pinned: false
----
-
-# Argus AI
-
-> Spatial Intelligence & Real-time Urban Anomaly Resolution Platform
-
-
-Argus AI is a cutting-edge platform designed to monitor, predict, and resolve urban traffic anomalies. By combining real-time computer vision with a custom Graph Neural Network (ST-GCN + Mamba), Argus AI provides city operators with instantaneous insights and predictive cascading delay analysis.
+<div align="center">
+  <h1>🚦 Argus AI</h1>
+  <p><b>Enterprise Spatial Intelligence & Real-time Urban Traffic Orchestration Platform</b></p>
+</div>
 
 ---
 
-## 🌟 Key Features
+**Argus AI** is a state-of-the-art urban mobility platform engineered to monitor, predict, and autonomously orchestrate traffic anomaly resolutions at city-scale. By fusing edge-deployed real-time computer vision with our proprietary predictive Spatio-Temporal Graph Neural Networks (ST-GCN + Mamba), Argus AI equips traffic command centers and municipal operators with sub-second insights and deep predictive analysis of cascading gridlocks.
 
-- **Real-Time Computer Vision**: YOLOv8-powered object detection running on live camera feeds to identify congestion and anomalies.
-- **Predictive Graph Modeling**: A custom Spatio-Temporal Graph Convolutional Network (ST-GCN) using Mamba state-space blocks to predict traffic flow across 2,290 nodes in Koramangala, Bangalore.
-- **Ripple Effect Simulation**: Instantly calculate how a delay at one intersection cascades through the entire urban grid.
-- **Automated Dispatch**: Simulate emergency unit dispatching to resolve anomalies with accurate ETA predictions.
+Built for scale, resilience, and actionable intelligence, Argus AI transcends traditional passive monitoring by modeling the future state of urban road networks and automating emergency response dispatch.
+
+---
+
+## 🌟 Core Capabilities
+
+- **Real-Time Edge Vision (Computer Vision)**: Leverages YOLOv8 for sub-millisecond object detection on live CCTV and drone feeds, identifying localized congestion, accidents, and unauthorized encroachments instantly.
+- **Predictive Network Modeling (ST-GCN)**: Utilizes a custom Spatio-Temporal Graph Convolutional Network enhanced with Mamba state-space blocks to accurately forecast traffic flow deterioration across complex urban grids (e.g., modeling thousands of nodes simultaneously).
+- **Cascading Ripple Effect Simulation**: Proprietary graph algorithms instantly calculate how a micro-delay at a single intersection will cascade and paralyze neighboring arterial roads over the next 60 minutes.
+- **Automated Dispatch & Mitigation**: Simulates and recommends dynamic mitigation strategies, including the automated dispatching of rapid-response units with traffic-aware ETA routing to neutralize anomalies before they propagate.
 
 ## 🏗️ Architecture
 
@@ -33,28 +27,64 @@ Argus AI consists of three main pillars:
 
 *For complete architectural details, please see the [Project Description](project_description.md).*
 
-## 🚀 Quick Start
+## 🚀 Comprehensive Setup & Execution Guide
 
-To run Argus AI locally, you need two terminal windows: one for the backend, one for the frontend.
+To run Argus AI locally, you need to set up the Python backend (including optional model training) and the Next.js frontend.
 
-### 1. Start the Backend
+### Prerequisites
+- **Python 3.9+** (for the backend & ML models)
+- **Node.js 18+** and **npm** (for the frontend)
+- (Optional) CUDA-enabled GPU for faster ST-GCN model training and YOLOv8 inference.
+
+### 1. Train the ST-GCN Model (Optional)
+If you do not have the pre-trained weights (`nexus_flow_model_weights.weights.h5`), you must train the model first. The training script will generate the `.keras` model and `.h5` weights and save them directly to `backend/data/`.
 
 ```bash
-cd backend
-python -m pip install -r requirements.txt
-python -m uvicorn main:app --port 8000
+# From the root directory:
+python -m pip install -r backend/requirements.txt
+python train_stgcn.py
 ```
-*Note: Make sure the ST-GCN weights (`nexus_flow_model_weights.weights.h5`) are in `backend/data/`.*
 
-### 2. Start the Frontend
+### 2. Start the Backend Server
+The backend is a FastAPI application that serves the ML models and graph data.
 
 ```bash
+# 1. Navigate to the backend directory
+cd backend
+
+# 2. (Optional but recommended) Create and activate a virtual environment
+python -m venv venv
+# On Windows:
+venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+
+# 3. Install the required Python packages
+python -m pip install -r requirements.txt
+
+# 4. Run the FastAPI server
+python -m uvicorn main:app --port 8000 --reload
+```
+*The backend will now be running at [http://localhost:8000](http://localhost:8000). It will automatically load the YOLOv8 model and the ST-GCN weights from the `data/` directory.*
+
+### 3. Start the Frontend Application
+The frontend is a Next.js application that provides the interactive WebGL interface. Open a **new terminal window** for this step.
+
+```bash
+# 1. Navigate to the frontend directory
 cd frontend
+
+# 2. Install Node dependencies
 npm install
+
+# 3. Start the development server
 npm run dev
 ```
 
-The application will be available at [http://localhost:3000](http://localhost:3000).
+### 4. View the Application
+Open your web browser and navigate to **[http://localhost:3000](http://localhost:3000)**. 
+- The interactive map and dashboard will load.
+- It will communicate with the backend at `localhost:8000` to fetch graph topologies, anomaly streams, and ripple effect predictions.
 
 ## 📡 API Reference
 
